@@ -1,0 +1,78 @@
+
+class Pessoa{
+    nome: string;
+    idade: number;
+
+    constructor(nome: string, idade: number){
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    toString(): string {
+        return ` ${this.nome}: ${this.idade}`;
+    }
+
+}
+
+class Moto{
+    pessoa: Pessoa | null;
+    pot: number;
+    time: number;
+
+    constructor(pot: number, time: number) { 
+        this.pot = pot;
+        this.time = time;
+        this.pessoa = null;
+    }
+
+    Comprar(time: number) {
+
+    }
+
+    Dirigir(time: number){
+
+    }
+
+    Buzina(){
+
+    }
+    
+    Iniciar(): void{
+        this.pot = 1;
+        this.time = 0;
+        this.pessoa = null;
+    }
+
+    toString(): string {
+        return `potência: ${this.pot}, minutos: ${this.time}, pessoa: ${this.pessoa}`;
+    }
+     
+    setSubir(pessoa: Pessoa): boolean {
+        if (this.pessoa != null) {
+            console.log("Já tem alguém na motoca");
+            return false;
+        }
+        if (this.pessoa = null) {
+            console.log("" + pessoa);
+            return false;
+        }
+        this.pessoa = pessoa;
+        return true;
+    }
+
+    Descer(pessoa: Pessoa): boolean{
+        if (this.pessoa != null) {
+            console.log("Desceu com sucesso");
+            return false;  
+            
+    }   return true;
+}
+
+}
+
+let pessoa = new Pessoa("Emeli", 9);
+let motoca = new Moto (2, 10);
+motoca.setSubir(pessoa);
+console.log(" " + pessoa);
+console.log(" " + motoca);
+
