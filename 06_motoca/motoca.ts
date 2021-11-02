@@ -1,4 +1,4 @@
-
+ 
 class Pessoa{
     nome: string;
     idade: number;
@@ -17,83 +17,72 @@ class Pessoa{
 class Moto{
     pessoa: Pessoa | null;
     pot: number;
-    time: number;
-    minutosAndados: number;
-
-    constructor(pot: number, time: number, minutosAndados: number) { 
+    timer: number;
+ 
+    constructor(pot: number, timer: number){
         this.pot = pot;
-        this.time = time;
         this.pessoa = null;
-        this.minutosAndados = minutosAndados;
+        this.timer = 0;
     }
 
-    Comprar(time: number): boolean {
-        if (this.pessoa == null) {
-           // this.Moto.setSubir();
+    comprarTempo(qtd: number): void {
+        this.timer += qtd;
+
+    }
+
+    dirigir(timer: number): boolean {
+        if(this.pessoa == null){
+            console.log("Moto Vazia")
+            return false;
+        }
+        if(this.pessoa.idade > 10){
+            console.log("criança grande demais");
+            return false;
+        }
+        if(this.timer < timer){
+            console.log("tempo insuficiente");
+            return false;
+        }
+        this.timer -= timer; 
+        return true;
+    }
+    buzinar(): string {
+        let saida = "p";
+        for (let i = 0; i < this.pot; i++)
+            saida += "e";
+        return saida + "m";    
+        
+    }
+    montar(pessoa: Pessoa): boolean{
+        if (this.pessoa === null){
+            this.pessoa = pessoa;
             return true;
         }
-       
-        // while e >= time {
-           // vai continuar andando 
-        //}
-    } 
-
-    Dirigir(time: number){
-
+        console.log("Moto Lotada");
+        return false;
     }
 
-    Buzina(){
-        let pem: string =" ";
-        for(let e: number = 0; e > this.pot; e++ ){
-            pem +="e"; 
+    desmontar(): Pessoa | null{
+        if (this.pessoa == null){
+            return null;
         }
-        return this.pot;
-        console.log(this.pot);
-
-    } 
-    
-    Iniciar(): void{
-        this.pot = 1;
-        this.time = 0;
+        const pessoa = this.pessoa;
         this.pessoa = null;
+        return pessoa;
     }
 
     toString(): string {
-        return `potência: ${this.pot}, minutos: ${this.time}`;
+        let nome = "vazio"
+        if(this.pessoa != null)   
+            nome = this.pessoa.nome;
+        return `[${nome}]`;    
     }
-     
-    setSubir(pessoa: Pessoa): boolean {
-        if (this.pessoa != null) {
-            console.log("Já tem alguém na motoca");
-            return false;
-        }
-        if (this.pessoa == null) {
-            console.log("Subiu com sucesso");
-            console.log("" + pessoa);
-            return false;
-        }
-        this.pessoa = pessoa;
-        return true;
-    }
-
-    setDescer(pessoa: Pessoa): boolean{
-        if (this.pessoa != null) {
-            console.log("Desceu com sucesso");
-            return false;  
-        }
-        else (this.pessoa == null);
-            console.log("Moto vazia");
-            return false;      
 
 }
 
-}
+let motoca = new Moto(5, 10);
+console.log(motoca.buzinar());
+motoca.montar(new Pessoa("Joao", 10));
+motoca.desmontar();
 
-let pessoa = new Pessoa("Emeli", 9);
-let motoca = new Moto (2, 10, 8);
-motoca.setSubir(new Pessoa("emeli", 9));
-
-console.log(" " + motoca + pessoa);
-motoca.setDescer(new Pessoa("emeli", 9));
-console.log(" " + motoca);
 
