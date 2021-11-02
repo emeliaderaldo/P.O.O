@@ -75,11 +75,19 @@ class Board {
         bubble.updateHard();
     this.romoveDeadBubbles();       
   }
+<<<<<<< HEAD
 
   romoveDeadBubbles(): void {
     this.bubbles = this.bubbles.filter(b => b.alive);        
   }
 
+=======
+
+  romoveDeadBubbles(): void {
+    this.bubbles = this.bubbles.filter(b => b.alive);        
+  }
+
+>>>>>>> cc47aa067d6ed8643b2a87286808a6eab32ac12f
   removeByHit(code: number) : void{
     for(let bubble of this.bubbles){
       if (bubble.letter[0].toUpperCase().charCodeAt(0) == code){
