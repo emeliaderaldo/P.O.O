@@ -21,7 +21,7 @@ class PulaPula{
         this.fila = [];
 
     }
-        //coloca a criança na fila 
+        //coloca a criança  na fila 
         EntrarNaFila(criança: Criança): void {
             this.fila.push(criança);
         }
@@ -34,14 +34,14 @@ class PulaPula{
         }
 
         removerDoPula(): boolean {
-            this.fila[1] = this.pula[0]; //ultimo da fila de espera
+            this.fila.push(this.pula[0]); //ultimo da fila de espera  
             this.pula.shift();
             return true;
         }
 
         
     toString() {
-        return `${this.pula[0]}: ${this.fila[1]}`;
+        return `${this.pula}: ${this.fila}`;
     }
 
 }
