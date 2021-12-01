@@ -1,3 +1,7 @@
+const readline = require('readline-sync');
+let input = (): string => readline.question();
+let write = (x : any) => process.stdout.write("" + x);
+
 class Tamagochi {
     
     private nome: string;
@@ -51,43 +55,6 @@ class Tamagochi {
 
     /* Cada operação causa aumento e reduções nos atributos.
     Nenhum atributo pode passar do máximo ou ir abaixo de 0. */
-    
-   public setLimpeza(): number{
-    return this.limpeza;
-}
-
-    public setEnergia(): number{
-    return this.energia;
-}
-
-    public setSociedade(): number{
-    return this.saciedade;
-}
-
-    public getLimpeza(): number{
-    return this.limpeza;
-}
-
-    public getLimpezaMax(): number{
-    return this.limpezaMax;
-}
-
-    public getEnergia(): number{
-    return this.energia;
-}
-
-    public getEnergiaMax(): number{
-    return this.energiaMax;
-}
-
-    public getSaci(): number{
-    return this.saciedade;
-}
-
-    public getSaciMax(): number{
-    return this.saciedadeMax;
-}
-
 
     public comendo(){
     /* altera em -1 a energia, +4 a saciedade, -2 a limpeza, +0 diamantes,  +1 a idade */
@@ -188,12 +155,57 @@ console.log("Pet sem sono")
 
 }
 
-let gochi = new Tamagochi("goshi", 20, 10, 15)
-gochi.jogando();
-gochi.comendo();
-gochi.dormindo();
-gochi.jogando();
-gochi.banho();
-gochi.jogando();
-gochi.comendo();
-console.log("" + gochi);
+class Tama {
+    nascer(): Tamagochi {
+        write("Digite o nome do seu Tamagochi: ");
+        let nome = input();
+        write("Digite o max de saciedade: ");
+        let saciedade = +input();
+        write("Digite o max de Energia: ");
+        let energia = +input();
+        write("Digite o max de Limpeza: ");
+        let limpeza = +input();
+        let tama = new Tamagochi(nome, energia , saciedade, limpeza);
+        return tama
+    }
+    mostrar_help() {
+        write("Comandos:\n");
+        write("  init <nome> <saciedade> <energia> <limpeza>: cria um novo pet\n");
+        write("  show: mostra o pet\n");
+        write("  play: faz o pet brincar\n");
+        write("  eat: faz o pet comer\n");
+        write("  end: sai do programa\n");
+    }
+
+    shell() {
+        let pet = new Tamagochi("", 0, 0, 0,);
+        this.mostrar_help();
+        while (true) {
+            write("$ ");
+            let line = input();
+            let words = line.split(" ");
+            if (words[0] == "end") {
+                break;
+            } else if (words[0] == "help") {
+                this.mostrar_help();
+            } else if (words[0] == "show") {
+                write("" + pet + "\n");
+            } else if (words[0] == "eat") {
+                pet.comendo();
+            } else if (words[0] == "play") {
+                pet.jogando();
+            } else if (words[0] == "init") {
+                let nome = words[1];
+                let sacMax = +words[2];
+                let enerMax = +words[3];
+                let limpMax = +words[4];
+                pet = new Tamagochi(nome, sacMax, enerMax, limpMax);
+            } else {
+                console.log("Comando inválido");
+            }
+        }
+    }
+}
+
+let tama = new Tama ();
+tama.shell();
