@@ -13,7 +13,7 @@ class Tamagochi {
     private limpezaMax: number;
     private diamantes: number;
     private idade: number;
-    private alive: boolean = true; 
+    private isAlive: boolean = true; 
 
     constructor(nome: string, energia: number, saciedade: number, limpeza: number){
     
@@ -41,18 +41,6 @@ class Tamagochi {
         return this.nome;
     }
 
-   public setEnergy(valor: number): void{
-        if(valor <= 0){
-            this.energia = 0;
-            console.log("fail: pet morreu de fraqueza");
-            this.alive = false;
-        }
-        else if(valor > this.energiaMax)
-            this.energia = this.energiaMax;
-        else
-            this.energia = valor;
-    }
-
     /* Cada operação causa aumento e reduções nos atributos.
     Nenhum atributo pode passar do máximo ou ir abaixo de 0. */
 
@@ -60,32 +48,34 @@ class Tamagochi {
     /* altera em -1 a energia, +4 a saciedade, -2 a limpeza, +0 diamantes,  +1 a idade */
     this.idade =+ 1;
 
+    if (!this.isAlive){
+        write("pet incapaz de comer, pois IS DEAD\n")
+            return;
+    }
+
     if (this.energia > 0) {
-       this.energia =- 1;
+       this.setEnergia(this.getEnergia() - 1);
     } 
 
     if (this.saciedade == this.saciedadeMax) {
-        this.saciedade =+4;
+        this.setSaciedade(this.getSaciedade() + 4);
     } 
     
     if (this.limpeza > 0) {
-        this.limpeza =- 2;
+        this.setLimpeza(this.getLimpeza() - 2);
     } 
-
-    this.morrendo();
 }
 
    public dormindo(){
     /* aumenta energia até o máximo e idade aumenta do número de turnos que o pet dormiu.
 # Os outros atributos permanecem inalterados. */
 /* Para dormir, precisa ter perdido pelo menos 5 unidades de energia (error: sem sono) */
-this.idade =+ 1;
+    this.idade =+ 1;
 
-if (this.energia = (this.energiaMax - 5)){
-    this.energia = this.energiaMax
-}
-
-console.log("Pet sem sono")
+    if (this.energia = (this.energiaMax - 5)){
+        this.energia = this.energiaMax
+    }
+    console.log("Pet sem sono")
 
 }
 
@@ -95,18 +85,16 @@ console.log("Pet sem sono")
     this.diamantes =+ 1;
 
     if (this.energia > 1) {
-       this.energia =- 2 ;
+        this.setEnergia(this.getEnergia() - 2); 
     } 
 
     if (this.saciedade > 1) {
-        this.saciedade =- 1;
+        this.setSaciedade(this.getSaciedade() - 4);
     } 
     
     if (this.limpeza > 3) {
-        this.limpeza =- 3;
+        this.setLimpeza(this.getLimpeza() - 3);
     } 
-    
-    this.morrendo();
 }
 
     public banho(){
@@ -114,23 +102,21 @@ console.log("Pet sem sono")
     this.idade =+ 2;
 
     if (this.energia > 3) {
-       this.energia =- 3;
+        this.setEnergia(this.getEnergia() - 3); 
     } 
 
     if (this.saciedade > 1) {
-        this.saciedade =- 1;
+        this.setSaciedade(this.getSaciedade() - 1);
     } 
     
     if (this.limpeza > 0){
         this.limpeza = this.limpezaMax
     }
 
-    this.morrendo();
-
 }
 
-   public morrendo(){
-    /* Se algum atributo chegar a 0, o pet morre e nenhuma ação pode ser feita a não ser mostrar os dados. */
+   /* public morrendo(){
+     Se algum atributo chegar a 0, o pet morre e nenhuma ação pode ser feita a não ser mostrar os dados.
     if (this.energia <= 0 || this.saciedade <= 0 || this.limpeza <= 0){
         console.log("pet está morto");
     }
@@ -147,10 +133,65 @@ console.log("Pet sem sono")
         this.limpeza = 0;
     }
     
+} */ 
+public setLimpeza(limpeza: number){
+    if (this.limpeza < 0){
+        this.limpeza = 0;
+        this.isAlive = false;
+        write("pet morreu\n")
+    } else if (limpeza > this.limpezaMax) {
+        this.limpeza = this.limpezaMax;
+        if (this.isAlive){
+            write("pet com energia máxima")
+        }
+    } else {
+        this.limpeza = limpeza;
+    }
+}
+public getLimpeza(){
+    return this.limpeza;
+}
+
+public setEnergia(energia: number){
+    if (this.energia < 0){
+        this.energia = 0;
+        this.isAlive = false;
+        write("pet morreu\n")
+    } else if (energia > this.energiaMax) {
+        this.energia = this.energiaMax;
+        if (this.isAlive){
+            write("pet com energia máxima")
+        }
+    } else {
+        this.energia = energia;
+    }
+}
+public getEnergia(){
+    return this.energia;
+}
+public setSaciedade(saciedade: number){
+    if (this.saciedade < 1){
+        this.saciedade = 0;
+        this.isAlive = false;
+        write("pet morreu\n")
+    } else if (saciedade > this.saciedadeMax){
+        this.saciedade = this.saciedadeMax;
+        this.isAlive = false;
+        write("pet morreu\n");
+    } else {
+        this.saciedade = saciedade;
+    }
+}
+public getSaciedade(){
+    return this.saciedade;
 }
 
     public toString(): string {
-    return `E:${this.energia}/${this.energiaMax}, S:${this.saciedade}/${this.saciedadeMax}, L:${this.limpeza}/${this.limpezaMax}, D:${this.diamantes}, I:${this.idade}`;
+        if(this.isAlive){
+            return `E:${this.energia}/${this.energiaMax}, S:${this.saciedade}/${this.saciedadeMax}, L:${this.limpeza}/${this.limpezaMax}, D:${this.diamantes}, I:${this.idade}`;
+    } else {
+        return "pet morreu, F."
+    }
 }
 
 }

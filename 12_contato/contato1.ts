@@ -40,7 +40,7 @@ public setTelefone(telefone: string): string{
 
 
 public isValid(): boolean{
-   if (!Fone.validate(this.telefone)){
+   if (Fone.validate(this.telefone)){
         console.log("Telefone Invalido"); 
         return true;
    }
